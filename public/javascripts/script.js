@@ -22,37 +22,19 @@ window.onload = function(){
           }
         }
     }else if(e.target.className == "image"){
-
         modal.classList.toggle("hidden");
-
         modal.querySelector("div img").setAttribute("src", e.target.src);
-
-
-        // data.forEach(item => {
-        // 	if(item.ID == e.target.closest("li").id){
-        // 		modal.querySelector("div img").setAttribute("src", item.image["big-image"]);
-        // 	}
-        // })
-
-    }else if(e.target.className == "modal"){
-        
-        console.log(e.target.className);
-
-        modal.classList.toggle("hidden");
-
-        // data.forEach(item => {
-        // 	if(item.ID == e.target.closest("li").id){
-        // 		modal.querySelector("div img").setAttribute("src", item.image["big-image"]);
-        // 	}
-        // })
-
     }
   });
 
 // модальное окно
 
-modal.querySelector("div > img").addEventListener("click",function(e){
-  e.stopPropagation();
-}, true);
+    modal.addEventListener("click",function(){
+		modal.classList.toggle("hidden");
+	});
+
+	modal.querySelector("div > img").addEventListener("click",function(e){
+	  e.stopPropagation();
+	}, true);
 
 }
