@@ -8,8 +8,6 @@ window.onload = function(){
   document.addEventListener("click", function(e){
 
     if(e.target.className == "remover"){
-        console.log(e.target.dataset.remove);
-        console.log(e.target.parentNode.remove())
         let xhr = new XMLHttpRequest();
         xhr.open('GET', `/?remove=${e.target.dataset.remove}`, true);
         xhr.send();
