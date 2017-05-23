@@ -14,22 +14,23 @@
                 <img src="/images/{{item}}" alt="" />
             </div>
         </div>
-        <header>
-            <h1>{{title}}</h1>
-            <p>Welcome to {{title}}</p>
-        </header>
+
         <div> 
 
-            <p>{{text}}</p>
-        
-            <form name="form" method="post" enctype="multipart/form-data" action="/">
-                <p><input name="image" type="file"/></p>
-                <input type="submit"/>
-            </form>
+            <div class="upload">
+                <h3>{{title}}</h3>
+                <div class="login-form">
+                    <span>* images only</span>
+                    <form id="upload" name="form" method="post" enctype="multipart/form-data" action="/">
+                        <div id="drop">
+                            <p><input name="image" type="file"/></p>
+                            <input type="submit"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
-            <p>* images only</p>
-
-            <p>
+            <div class="images">
                 {% for item in imagename %}
                     <div class="item">
                         <span data-remove="{{item}}" class="remover">x delete</span>
@@ -38,7 +39,7 @@
                         {#</a>#}
                     </div>
                 {% endfor %}
-            </p>
+            </div>
 
         </div>
     </body>

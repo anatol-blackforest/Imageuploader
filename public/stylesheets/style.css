@@ -56,6 +56,86 @@ a {
     display: none !important;
 }
 
+.upload {
+    width: 35%;
+    margin: 0 auto;
+    margin-bottom: 60px;
+    padding: 15px;
+    background-color: #34383b;
+    box-shadow: 7px 7px 7px #585757;
+}
+
+h3 {
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #F1F1F1;
+}
+
+.login-form {
+    color: #fff;
+    padding: 10px;
+    position: relative;
+    background-color: #34383b;
+}
+
+#drop a {
+    background: #0986A3 url(../images/up.png) no-repeat 10px;
+    padding: 10px 15px 10px 30px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 16px;
+    letter-spacing: 2px;
+    margin-top: 10px;
+}
+
+.login-form a {
+    color: #898989;
+    font-size: 0.875em;
+    letter-spacing: 2px;
+    font-style: italic;
+}
+
+.upload span {
+    color: #F1F1F1;
+    text-transform: uppercase;
+    font-size: 1.1em;
+    display: block;
+    letter-spacing: 2px;
+}
+
+.upload input[type="text"] {
+    width: 96%;
+    padding: 10px;
+    color: #1D1B1B;
+    margin: 15px 0;
+    outline: none;
+    font-family: WorkSans-Regular;
+    font-size: 0.875em;
+    letter-spacing: 1px;
+    border: none;
+    background-color: #f1f1f1;
+}
+
+input.title {
+    width: 70%;
+    padding: 5px;
+    background-color: #F5F5F5;
+    color: #000;
+    border: none;
+    margin-left: 80px;
+}
+
+div.images{
+  background:#9DA1AA;
+  box-shadow: 7px 7px 7px #82898F;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding-top:20px
+}
+
 div.item{
     float: left;
     margin: 10px;
@@ -64,7 +144,7 @@ div.item{
 	height:300px;
 	position:relative;
 	overflow:hidden;
-	background: lightgrey
+	background: #909090
 }
 
 div.item span{
@@ -76,5 +156,5 @@ div.item span{
     padding: 5px 10px;
     text-align:center;
     cursor: pointer;
-    background-color:#ccc;
+    background-color:#f1f1f1;
 }

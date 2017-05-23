@@ -19,7 +19,7 @@ let renderImg = function(res){
         res.render(
             'index', 
             { 
-              title: 'Форма', 
+              title: 'Image uploader', 
               imagename: items.reverse()
             }
         );
