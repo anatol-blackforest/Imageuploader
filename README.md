@@ -1,2 +1,2 @@
 # Imageuploader
-Imagefiles uploader on Node.js+Express
+Image uploader on Node.js+Express
