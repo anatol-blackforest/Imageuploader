@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>{{title}}</title>
+        <link rel="stylesheet" href="/stylesheets/style.css">
+        <script src="/javascripts/script.js"></script>
+    </head>
+    <body>
+        <header>
+            <h1>{{title}}</h1>
+            <p>Welcome to {{title}}</p>
+        </header>
+        <div> 
+
+            <p>{{text}}</p>
+        
+            <form name="form" method="post" enctype="multipart/form-data" action="/">
+                <p><input name="image" type="file"/></p>
+                <input type="submit"/>
+            </form>
+
+            <p>* images only</p>
+
+            <p>
+                {% for item in imagename %}
+                    <div class="item">
+                        <span data-remove="{{item}}" class="remover">x delete</span>
+                        <img src="/images/{{item}}">
+                    </div>
+                {% endfor %}
+            </p>
+
+        </div>
+    </body>
+</html>

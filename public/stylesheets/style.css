@@ -1,0 +1,29 @@
+body {
+   padding: 50px;
+   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+   color: #00B7FF;
+}
+
+img{
+   max-width:300px
+}
+
+div.item{
+    float: left;
+    margin: 10px;
+    position: relative;
+}
+div.item span{
+    z-index: 10;
+    position: absolute;
+    display:block;
+    top: 0;
+    right: 0;
+    padding: 5px 10px;
+    text-align:center;
+    cursor: pointer;
+    background-color:#ccc;
+}
