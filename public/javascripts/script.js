@@ -4,7 +4,9 @@ window.onload = function(){
   const modal = document.getElementById("modal");
 
   document.addEventListener("click", function(e){
+
     if(e.target.className == "remover"){
+        e.target.parentNode.remove();
         let xhr = new XMLHttpRequest();
         xhr.open('GET', `/?remove=${e.target.dataset.remove}`, true);
         xhr.send();
