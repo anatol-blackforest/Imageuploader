@@ -6,7 +6,6 @@ window.onload = function(){
   console.log(document.querySelector("div"));
 
   document.addEventListener("click", function(e){
-
     if(e.target.className == "remover"){
         let xhr = new XMLHttpRequest();
         xhr.open('GET', `/?remove=${e.target.dataset.remove}`, true);
