@@ -43,14 +43,14 @@ app.get('/', (req, res) => {
 });
 
 //загрузка нового изображения
-
 let storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './public/images/')
   },
   filename: function (req, file, cb) {
     let mime = file.mimetype;
-    let extention = mime.slice(mime.indexOf("/")+1)
+    let extention = mime.slice(mime.indexOf("/")+1);
+    (extention=="svg+xml")?extention="svg":(extention=="x-icon")?extention="ico":extention;
     cb(null, `${Date.now()}.${extention}`);
     console.log(extention);
   }
