@@ -3,8 +3,6 @@ window.onload = function(){
   const remover = document.getElementsByClassName("remover");
   const modal = document.getElementById("modal");
 
-  console.log(document.querySelector("div"));
-
   document.addEventListener("click", function(e){
     if(e.target.className == "remover"){
         let xhr = new XMLHttpRequest();
