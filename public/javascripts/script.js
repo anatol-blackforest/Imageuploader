@@ -19,8 +19,8 @@ window.onload = function(){
           }
         }
     }else if(e.target.className == "image"){
-        modal.classList.toggle("hidden");
         modal.querySelector("div img").setAttribute("src", e.target.src);
+        modal.classList.toggle("hidden");
     }
   });
 
