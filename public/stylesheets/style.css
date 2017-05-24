@@ -49,7 +49,8 @@ a {
 .modal > div.modal-window > img {
     z-index: 101;
     max-height: 90%;
-    max-width: 100%;
+    max-width: 90%;
+	margin: auto;
 }
 
 .hidden {
