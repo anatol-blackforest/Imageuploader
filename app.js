@@ -31,6 +31,7 @@ let renderImg = function(res){
 
 //вывод изображений по заходу или перегрузке страницы
 app.get('/', (req, res) => {
+    error = false;
     let arg = req.url;
     let removed = arg.slice(arg.indexOf('=')+1);
     console.log(removed);
@@ -60,6 +61,7 @@ let storage = multer.diskStorage({
 
 let upload = multer({
   storage: storage,
+  limits: { fileSize: 2 * 1024 * 1024 },
   dest: 'public/images/',
   fileFilter: function (req, file, cb) {
     console.log('Upload started');
@@ -72,11 +74,19 @@ let upload = multer({
       error = false
     }
   }
-});
+}).single('image');
 
 //вывод обновленной коллекции после загрузки нового изображения
-app.post('/', upload.single('image'), (req, res, next) => {
-    renderImg(res);
+app.post('/', (req, res, next) => {
+    upload(req, res, function (err) {
+      if (err) {
+        // console.log(err);
+        error = "Very big image! (must be less than 2 mb)";
+        renderImg(res)
+      } else{
+        renderImg(res);
+      }
+    });
 });
 
 // view engine setup
