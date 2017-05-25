@@ -13,6 +13,8 @@ const index = require('./routes/index');
 
 const app = express();
 
+let error;
+
 //вывод коллекции изображений
 let renderImg = function(res){
     fs.readdir("./public/images/", function(err, items) {
@@ -20,7 +22,8 @@ let renderImg = function(res){
             'index', 
             { 
               title: 'Image uploader', 
-              imagename: items.reverse()
+              imagename: items.reverse(),
+              error
             }
         );
     });
@@ -52,7 +55,6 @@ let storage = multer.diskStorage({
     let extention = mime.slice(mime.indexOf("/")+1);
     (extention=="svg+xml")?extention="svg":(extention=="x-icon")?extention="ico":extention;
     cb(null, `${Date.now()}.${extention}`);
-    console.log(extention);
   }
 })
 
@@ -63,9 +65,11 @@ let upload = multer({
     console.log('Upload started');
     let mime = file.mimetype;
     if (mime.indexOf('image') == -1) {
-      cb(null, false)
+      cb(null, false);
+      error = "Please upload image only!"
     }else{
-      cb(null, true)
+      cb(null, true);
+      error = false
     }
   }
 });

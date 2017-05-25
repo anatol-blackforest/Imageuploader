@@ -20,7 +20,11 @@
             <div class="upload">
                 <h3>{{title}}</h3>
                 <div class="login-form">
-                    <span>* images only</span>
+                    {% if error %}
+                        <span style="color:red">{{error}}</span>
+                    {% else %}
+                        <span>* images only</span>
+                    {% endif %}
                     <form id="upload" name="form" method="post" enctype="multipart/form-data" action="/">
                         <div id="drop">
                             <p><input name="image" type="file"/></p>
