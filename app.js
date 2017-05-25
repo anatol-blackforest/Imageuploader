@@ -13,7 +13,7 @@ const index = require('./routes/index');
 
 const app = express();
 
-let error;
+let error = false;
 
 //вывод коллекции изображений
 let renderImg = function(res){
