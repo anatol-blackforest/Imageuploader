@@ -10,29 +10,21 @@ const multer = require('multer');
 const fs = require('fs');
 
 const index = require('./routes/index');
+const upload = require('./lib/uploader');
+const render = require('./lib/render');
 
 const app = express();
 
-let error = false;
-
-//вывод коллекции изображений
-let renderImg = function(res){
-    fs.readdir("./public/images/", function(err, items) {
-        res.render(
-            'index', 
-            { 
-              title: 'Image uploader', 
-              imagename: items.reverse(),
-              error
-            }
-        );
-    });
-}
+let messages = ["Very big image! (must be less than 2 mb)", "Please upload image only!"],
+    title = "Image uploader",
+    descr = "* images only (2MB max)",
+    error = false;
 
 //вывод изображений по заходу или перегрузке страницы
 app.get('/', (req, res) => {
     error = false;
     let removed = req.query.remove;
+    //удаление картинки по клику
     if(removed){
         fs.exists(`public/images/${removed}`,function(exists){
           if(exists){
@@ -40,50 +32,25 @@ app.get('/', (req, res) => {
           }
         });
     }else{
-      renderImg(res);
+      render(res, title, descr, error);
     }
 });
-
-//загрузка нового изображения
-let storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './public/images/')
-  },
-  filename: function (req, file, cb) {
-    let mime = file.mimetype;
-    let extention = mime.slice(mime.indexOf("/")+1);
-    (extention=="svg+xml")?extention="svg":(extention=="x-icon")?extention="ico":extention;
-    cb(null, `${Date.now()}.${extention}`);
-  }
-})
-
-let upload = multer({
-  storage: storage,
-  limits: { fileSize: 2 * 1024 * 1024 },
-  dest: 'public/images/',
-  fileFilter: function (req, file, cb) {
-    console.log('Upload started');
-    let mime = file.mimetype;
-    if (mime.indexOf('image') == -1) {
-      cb(null, false);
-      error = "Please upload image only!"
-    }else{
-      cb(null, true);
-      error = false
-    }
-  }
-}).single('image');
 
 //вывод обновленной коллекции после загрузки нового изображения
 app.post('/', (req, res, next) => {
     upload(req, res, function (err) {
-      if (err) {
-        // console.log(err);
-        error = "Very big image! (must be less than 2 mb)";
-        renderImg(res)
-      } else{
-        renderImg(res);
-      }
+        if (err){
+            error = messages[0];
+            render(res, title, descr, error);
+        } else {
+            if (req.file && req.file.mimetype && req.file.mimetype.indexOf('image') !== -1){
+                error = false;
+                render(res, title, descr, error);
+            } else {
+                error =  messages[1];
+                render(res, title, descr, error);
+            }
+        }
     });
 });
 

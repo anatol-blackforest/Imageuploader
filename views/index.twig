@@ -11,7 +11,7 @@
     <body>
         <div id="modal" class="modal hidden">
             <div class="modal-window">
-                <img src="/images/{{item}}" alt="" />
+                <img src="" alt="" />
             </div>
         </div>
 
@@ -23,7 +23,7 @@
                     {% if error %}
                         <span style="color:red">{{error}}</span>
                     {% else %}
-                        <span>* images only (2MB max)</span>
+                        <span>{{descr}}</span>
                     {% endif %}
                     <form id="upload" name="form" method="post" enctype="multipart/form-data" action="/">
                         <div id="drop">
