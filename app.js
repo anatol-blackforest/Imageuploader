@@ -13,7 +13,7 @@ const index = require('./routes/index');
 
 const app = express();
 
-let error = false;
+let removed, error = false;
 
 //вывод коллекции изображений
 let renderImg = function(res){
@@ -32,10 +32,8 @@ let renderImg = function(res){
 //вывод изображений по заходу или перегрузке страницы
 app.get('/', (req, res) => {
     error = false;
-    let arg = req.url;
-    let removed = arg.slice(arg.indexOf('=')+1);
-    console.log(removed);
-    if((arg.indexOf("remove") !== -1)){
+    removed = req.query.remove;
+    if(removed){
         fs.exists(`public/images/${removed}`,function(exists){
           if(exists){
             fs.unlink(`public/images/${removed}`);
