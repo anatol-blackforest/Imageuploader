@@ -10,7 +10,7 @@ const multer = require('multer');
 const fs = require('fs');
 
 const index = require('./routes/index');
-const upload = require('./lib/uploader');
+const uploader = require('./lib/uploader');
 const render = require('./lib/render');
 const remover = require('./lib/remover');
 
@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
 
 //валидация и вывод обновленной коллекции после загрузки 
 app.post('/', (req, res, next) => {
-    upload(req, res, function (err) {
+    uploader(req, res, function (err) {
         if (err){
             hint = messages[0];
             render(res, title, descr, hint);
