@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
     remover(req, res, title, descr, hint, render);
 });
 
-//вывод обновленной коллекции после загрузки нового изображения
+//валидация и вывод обновленной коллекции после загрузки 
 app.post('/', (req, res, next) => {
     upload(req, res, function (err) {
         if (err){
