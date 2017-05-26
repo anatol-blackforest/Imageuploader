@@ -13,7 +13,7 @@ const index = require('./routes/index');
 
 const app = express();
 
-let removed, error = false;
+let error = false;
 
 //вывод коллекции изображений
 let renderImg = function(res){
@@ -27,12 +27,12 @@ let renderImg = function(res){
             }
         );
     });
-} 
+}
 
 //вывод изображений по заходу или перегрузке страницы
 app.get('/', (req, res) => {
     error = false;
-    removed = req.query.remove;
+    let removed = req.query.remove;
     if(removed){
         fs.exists(`public/images/${removed}`,function(exists){
           if(exists){
