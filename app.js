@@ -12,43 +12,34 @@ const fs = require('fs');
 const index = require('./routes/index');
 const upload = require('./lib/uploader');
 const render = require('./lib/render');
+const remover = require('./lib/remover');
 
 const app = express();
 
 let messages = ["Very big image! (must be less than 2 mb)", "Please upload image only!"],
     title = "Image uploader",
     descr = "* images only (2MB max)",
-    error = false;
+    hint;
 
 //вывод изображений по заходу или перегрузке страницы
 app.get('/', (req, res) => {
-    error = false;
-    let removed = req.query.remove;
-    //удаление картинки по клику
-    if(removed){
-        fs.exists(`public/images/${removed}`,function(exists){
-          if(exists){
-            fs.unlink(`public/images/${removed}`);
-          }
-        });
-    }else{
-      render(res, title, descr, error);
-    }
+    hint = false;
+    remover(req, res, title, descr, hint, render);
 });
 
 //вывод обновленной коллекции после загрузки нового изображения
 app.post('/', (req, res, next) => {
     upload(req, res, function (err) {
         if (err){
-            error = messages[0];
-            render(res, title, descr, error);
+            hint = messages[0];
+            render(res, title, descr, hint);
         } else {
             if (req.file && req.file.mimetype && req.file.mimetype.indexOf('image') !== -1){
-                error = false;
-                render(res, title, descr, error);
+                hint = false;
+                render(res, title, descr, hint);
             } else {
-                error =  messages[1];
-                render(res, title, descr, error);
+                hint =  messages[1];
+                render(res, title, descr, hint);
             }
         }
     });
@@ -72,7 +63,7 @@ app.use('/', index);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+  var err = new error('Not Found');
   err.status = 404;
   next(err);
 });
