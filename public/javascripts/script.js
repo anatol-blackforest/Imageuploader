@@ -6,7 +6,6 @@ window.onload = function(){
   document.addEventListener("click", function(e){
 
     if(e.target.className == "remover"){
-        e.target.parentNode.remove();
         let xhr = new XMLHttpRequest();
         xhr.open('GET', `/?remove=${e.target.dataset.remove}`, true);
         xhr.send();
@@ -15,6 +14,7 @@ window.onload = function(){
           if (xhr.status != 200) {
             console.log(xhr.status + ': ' + xhr.statusText);
           } else {
+            e.target.parentNode.remove();
             console.log("GO!");
           }
         }
