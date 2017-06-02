@@ -29,7 +29,6 @@ app.get('/', (req, res) => {
 
 //удаление изображения
 app.delete('/', (req, res) => {
-    hint = false;
     remover(req, res);
 });
 
