@@ -21,13 +21,19 @@ let messages = ["Very big image! (must be less than 2 mb)", "Please upload image
     descr = "* images only (2MB max)",
     hint;
 
-//вывод изображений по заходу или перегрузке страницы
+//вывод изображений
 app.get('/', (req, res) => {
     hint = false;
-    remover(req, res, title, descr, hint, render);
+    render(res, title, descr, hint);
 });
 
-//валидация и вывод обновленной коллекции после загрузки 
+//удаление изображения
+app.delete('/', (req, res) => {
+    hint = false;
+    remover(req, res);
+});
+
+//валидация, загрузка и вывод обновленной коллекции
 app.post('/', (req, res, next) => {
     uploader(req, res, function (err) {
         if (err){

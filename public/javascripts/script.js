@@ -8,7 +8,7 @@ window.onload = function(){
     if(e.target.className == "remover"){
         e.target.parentNode.remove();
         let xhr = new XMLHttpRequest();
-        xhr.open('GET', `/?remove=${e.target.dataset.remove}`, true);
+        xhr.open('DELETE', `/?remove=${e.target.dataset.remove}`, true);
         xhr.send();
         xhr.onreadystatechange = function() { 
           if (xhr.readyState != 4) return;
