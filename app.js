@@ -21,6 +21,35 @@ let messages = ["Very big image! (must be less than 2 mb)", "Please upload image
     descr = "* images only (2MB max)",
     hint;
 
+//вывод изображений
+app.get('/', (req, res) => {
+    hint = false;
+    render(res, title, descr, hint);
+});
+
+//удаление изображения
+app.delete('/', (req, res) => {
+    remover(req, res);
+});
+
+//валидация, загрузка и вывод обновленной коллекции
+app.post('/', (req, res, next) => {
+    uploader(req, res, function (err) {
+        if (err){
+            hint = messages[0];
+            render(res, title, descr, hint);
+        } else {
+            if (req.file && req.file.mimetype && req.file.mimetype.indexOf('image') !== -1){
+                hint = false;
+                render(res, title, descr, hint);
+            } else {
+                hint =  messages[1];
+                render(res, title, descr, hint);
+            }
+        }
+    });
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'twig');
@@ -35,39 +64,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //express.bodyParser({ uploadDir: 'photos' });
 
-app.route("/")
-    //вывод изображений
-    .get((req, res) => {
-        hint = false;
-        render(res, title, descr, hint);
-    })
-    //удаление изображения
-    .delete((req, res) => {
-        remover(req, res);
-    })
-    //валидация, загрузка и вывод обновленной коллекции
-    .post((req, res, next) => {
-        uploader(req, res, function (err) {
-            if (err){
-                hint = messages[0];
-                render(res, title, descr, hint);
-            } else {
-                if (req.file && req.file.mimetype && req.file.mimetype.indexOf('image') !== -1){
-                    hint = false;
-                    render(res, title, descr, hint);
-                } else {
-                    hint =  messages[1];
-                    render(res, title, descr, hint);
-                }
-            }
-        });
-    });
-
 app.use('/', index);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  let err = new Error('Not Found');
+  var err = new error('Not Found');
   err.status = 404;
   next(err);
 });
@@ -77,6 +78,7 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
+
   // render the error page
   res.status(err.status || 500);
   res.render('error');
