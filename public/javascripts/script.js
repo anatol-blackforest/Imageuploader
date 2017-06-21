@@ -2,6 +2,9 @@ window.onload = function(){
 
   const remover = document.getElementsByClassName("remover");
   const modal = document.getElementById("modal");
+  const upload = document.getElementById("upload");
+
+  let enabled = true;
 
   document.addEventListener("click", function(e){
 
@@ -33,5 +36,13 @@ window.onload = function(){
 	modal.querySelector("div > img").addEventListener("click",function(e){
 	  e.stopPropagation();
 	}, true);
+
+	upload.addEventListener("submit", function(e){
+	  	e.preventDefault();
+		if(enabled){
+		 upload.submit();
+		 enabled = false;
+		}
+	});
 
 }
