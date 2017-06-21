@@ -9,7 +9,6 @@ const util = require('util');
 const multer = require('multer');
 const fs = require('fs');
 
-const index = require('./routes/index');
 const uploader = require('./lib/uploader');
 const render = require('./lib/render');
 const remover = require('./lib/remover');
