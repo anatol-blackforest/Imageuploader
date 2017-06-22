@@ -37,10 +37,6 @@ app.route("/")
         hint = false;
         render(res, title, descr, hint);
     })
-    //удаление изображения
-    .delete((req, res) => {
-        remover(req, res);
-    })
     //валидация, загрузка и вывод обновленной коллекции
     .post((req, res, next) => {
         uploader(req, res, function (err) {
@@ -58,6 +54,11 @@ app.route("/")
             }
         });
     });
+
+//удаление изображения
+app.delete("/delete/:id", (req, res) => {
+    remover(req, res);
+})    
 
 // ловим 404 ошибку
 app.use((req, res) => {
