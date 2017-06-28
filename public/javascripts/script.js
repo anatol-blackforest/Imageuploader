@@ -9,6 +9,7 @@ window.onload = function(){
   document.addEventListener("click", function(e){
 
     if(e.target.className == "remover"){
+        e.target.parentNode.remove();
         let xhr = new XMLHttpRequest();
         xhr.open('DELETE', `/delete/${e.target.dataset.remove}`, true);
         xhr.send();
@@ -18,7 +19,6 @@ window.onload = function(){
             console.log(xhr.status + ': ' + xhr.statusText);
           } else {
             console.log("GO!");
-            location.reload();
           }
         }
     }else if(e.target.className == "image"){
@@ -30,19 +30,19 @@ window.onload = function(){
 // модальное окно
 
   modal.addEventListener("click",function(){
-		modal.classList.toggle("hidden");
-	});
+    modal.classList.toggle("hidden");
+  });
 
-	modal.querySelector("div > img").addEventListener("click",function(e){
-	  e.stopPropagation();
-	}, true);
+  modal.querySelector("div > img").addEventListener("click",function(e){
+    e.stopPropagation();
+  }, true);
 
-	upload.addEventListener("submit", function(e){
-	  	e.preventDefault();
-		if(enabled){
-		 upload.submit();
-		 enabled = false;
-		}
-	});
+  upload.addEventListener("submit", function(e){
+      e.preventDefault();
+    if(enabled){
+     upload.submit();
+     enabled = false;
+    }
+  });
 
 }
