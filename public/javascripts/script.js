@@ -7,26 +7,25 @@ window.onload = function(){
   let enabled = true;
 
   document.addEventListener("click", function(e){
-
     if(e.target.className == "remover"){
-        e.target.parentNode.remove();
-        let xhr = new XMLHttpRequest();
-        xhr.open('DELETE', `/delete/${e.target.dataset.remove}`, true);
-        xhr.send();
-        xhr.onreadystatechange = function() { 
-          if (xhr.readyState != 4) return;
-          if (xhr.status != 200) {
-            console.log(xhr.status + ': ' + xhr.statusText);
-          } else {
-            console.log("GO!");
-          }
+	    let xhr = new XMLHttpRequest();
+	    xhr.open('DELETE', `/delete/${e.target.dataset.remove}`, true);
+	    xhr.send();
+      xhr.onreadystatechange = function() { 
+        if (xhr.readyState != 4) return;
+        if (xhr.status != 200) {
+          console.log(xhr.status + ': ' + xhr.statusText);
+        } else {
+          location.href = "/";
+          console.log("GO!");
+          console.log(xhr.status + ': ' + xhr.statusText);
         }
-    }else if(e.target.className == "image"){
+      }
+	}else if(e.target.className == "image"){
         modal.querySelector("div img").setAttribute("src", e.target.src);
         modal.classList.toggle("hidden");
     }
   });
-
 // модальное окно
 
   modal.addEventListener("click",function(){

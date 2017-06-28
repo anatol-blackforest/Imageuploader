@@ -57,7 +57,10 @@ app.route("/")
 
 //удаление изображения
 app.delete("/delete/:id", (req, res) => {
-    remover(req, res);
+    remover(req, res, () => {
+        hint = false;
+        render(res, title, descr, hint);
+    });
 })    
 
 // ловим 404 ошибку
