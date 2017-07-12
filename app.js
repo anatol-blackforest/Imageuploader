@@ -53,20 +53,25 @@ app.route("/")
     })
     //валидация, загрузка и вывод обновленной коллекции
     .post((req, res, next) => {
-        uploader(req, res, function (err) {
-            if (err){
-                hint = messages[0];
-                render(req, res, title, descr, hint);
-            } else {
-                if (req.file && req.file.mimetype && req.file.mimetype.indexOf('image') !== -1){
-                    hint = false;
+        if(req.session.admin){
+            uploader(req, res, function (err) {
+                if (err){
+                    hint = messages[0];
                     render(req, res, title, descr, hint);
                 } else {
-                    hint =  messages[1];
-                    render(req, res, title, descr, hint);
+                    if (req.file && req.file.mimetype && req.file.mimetype.indexOf('image') !== -1){
+                        hint = false;
+                        render(req, res, title, descr, hint);
+                    } else {
+                        hint =  messages[1];
+                        render(req, res, title, descr, hint);
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            hint = messages[3];
+            render(req, res, title, descr, hint);
+        }
     });
 
 //удаление изображения
