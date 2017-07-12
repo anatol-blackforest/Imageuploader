@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>{{title}}</title>
+        <link rel="stylesheet" href="/stylesheets/style.css">
+        <script src="/javascripts/script.js"></script>
+    </head>
+    <body>
+        <div id="modal" class="modal hidden">
+            <div class="modal-window">
+                <img src="" alt="" />
+            </div>
+        </div>
+
+        <div class="container"> 
+            <div class="upload">
+                <h3>{{title}}</h3>
+                <div class="login-form">
+                    {% if hint %}
+                        <span style="color:red">{{hint}}</span>
+                    {% else %}
+                        <span>{{descr}}</span>
+                    {% endif %}
+                    <form id="login" name="form" method="post" action="/login/">
+                        <div id="drop">
+                            <p><input name="username" type="text"/></p>
+                            <p><input name="password" type="password"/></p>
+                            <input type="submit"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="images">
+                {% for item in imagename %}
+                    <div class="item">
+                        <img class="image" src="/images/{{item}}">
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </body>
+</html>
