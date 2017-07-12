@@ -17,17 +17,16 @@ const remover = require('./lib/remover');
 const app = express();
 
 let messages = ["Very big image! (must be less than 2 mb)", "Please upload image only!", "Пожалуйста, введите верные логин и пароль", "Хуй хакерам, а не помидоры!"],
+    //имя и пароль админа (вне базы для этой версии)
     admin = {username:"admin", password:"123"},
     title = ["Image uploader", "Авторизация"],
     descr = ["* images only (2MB max)","Введите логин и пароль"],
     hint;
 
-// view engine setup
+//шаблонизатор
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'twig');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
