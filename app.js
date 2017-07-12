@@ -16,7 +16,7 @@ const remover = require('./lib/remover');
 
 const app = express();
 
-let messages = ["Very big image! (must be less than 2 mb)", "Please upload image only!"],
+let messages = ["Very big image! (must be less than 2 mb)", "Please upload image only!", "Пожалуйста, введите верные логин и пароль", "Хуй хакерам, а не помидоры!"],
     admin = {username:"admin", password:"123"},
     title = ["Image uploader", "Авторизация"],
     descr = ["* images only (2MB max)","Введите логин и пароль"],
@@ -40,7 +40,8 @@ app.post("/login/", function (req, res, next) {
         req.session.admin = true;
         res.redirect("/");
     }else{
-        res.redirect("/");
+        hint = messages[2];
+        render(req, res, title, descr, hint);
     }
 });
 
@@ -70,10 +71,15 @@ app.route("/")
 
 //удаление изображения
 app.delete("/delete/:id", (req, res) => {
-    remover(req, res, () => {
-        hint = false;
+    if(req.session.admin){
+        remover(req, res, () => {
+            hint = false;
+            render(req, res, title, descr, hint);
+        });
+    }else{
+        hint = messages[3];
         render(req, res, title, descr, hint);
-    });
+    }
 })    
 
 // ловим 404 ошибку
