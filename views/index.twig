@@ -8,13 +8,20 @@
         <link rel="stylesheet" href="/stylesheets/style.css">
         <script src="/javascripts/script.js"></script>
     </head>
-    <body>
+    <body class="index">
         <div id="modal" class="modal hidden">
             <div class="modal-window">
                 <img src="" alt="" />
             </div>
         </div>
-
+        <div class="logout">
+            <form id="logout" name="logout" method="post" action="/logout/">
+                <div>
+                    <span>Привет {{admin.username}}</span>
+                    <input type="submit" value="logout"/>
+                </div>
+            </form>
+        </div>
         <div class="container"> 
 
             <div class="upload">

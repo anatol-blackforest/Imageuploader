@@ -10,11 +10,25 @@ body {
     height:100%;
     display:flex;
 }
+body.index {
+   padding-top: 100px;
+}
 
 a {
    color: #00B7FF;
 }
-
+.logout{
+    position: absolute;
+    width: 100%;
+    background-color: #34383b;
+    color: #fff;
+    margin:-100px 0 0 -50px;
+    padding: 10px 0;
+}
+.logout div{
+    float: right;
+    margin-right:10px;
+}
 .item img{
 /*    min-height:200px;
    max-height:300px */

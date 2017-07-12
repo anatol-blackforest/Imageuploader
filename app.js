@@ -4,7 +4,7 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const session = require('cookie-session')
+const session = require('cookie-session');
 const twig = require('twig');
 const util = require('util');
 const multer = require('multer');
@@ -34,7 +34,7 @@ app.use(cookieParser());
 app.use(session({keys: ['montesuma']}));
 
 //авторизация
-app.post("/login/", function (req, res, next) {
+app.post("/login/", function (req, res) {
 	if(req.body.username == admin.username && req.body.password == admin.password){
         req.session.admin = true;
         res.redirect("/");
@@ -44,32 +44,38 @@ app.post("/login/", function (req, res, next) {
     }
 });
 
+//выход
+app.post("/logout/", function (req, res) {
+    req.session = null;
+    res.redirect("/");
+});
+
 app.route("/")
     //вывод изображений
     .get((req, res) => {
         hint = false;
-        render(req, res, title, descr, hint);
+        render(req, res, title, descr, hint, admin);
     })
     //валидация, загрузка и вывод обновленной коллекции
-    .post((req, res, next) => {
+    .post((req, res) => {
         if(req.session.admin){
             uploader(req, res, function (err) {
                 if (err){
                     hint = messages[0];
-                    render(req, res, title, descr, hint);
+                    render(req, res, title, descr, hint, admin);
                 } else {
                     if (req.file && req.file.mimetype && req.file.mimetype.indexOf('image') !== -1){
                         hint = false;
-                        render(req, res, title, descr, hint);
+                        render(req, res, title, descr, hint, admin);
                     } else {
                         hint =  messages[1];
-                        render(req, res, title, descr, hint);
+                        render(req, res, title, descr, hint, admin);
                     }
                 }
             });
         }else{
             hint = messages[3];
-            render(req, res, title, descr, hint);
+            render(req, res, title, descr, hint, admin);
         }
     });
 
@@ -78,11 +84,11 @@ app.delete("/delete/:id", (req, res) => {
     if(req.session.admin){
         remover(req, res, () => {
             hint = false;
-            render(req, res, title, descr, hint);
+            render(req, res, title, descr, hint, admin);
         });
     }else{
         hint = messages[3];
-        render(req, res, title, descr, hint);
+        render(req, res, title, descr, hint, admin);
     }
 })    
 
