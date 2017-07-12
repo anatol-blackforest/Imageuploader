@@ -107,7 +107,7 @@ h3 {
     letter-spacing: 2px;
 }
 
-.upload input[type="text"] {
+.upload input[type="text"], .upload input[type="password"] {
     width: 96%;
     padding: 10px;
     color: #1D1B1B;
