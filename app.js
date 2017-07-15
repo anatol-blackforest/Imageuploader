@@ -47,7 +47,7 @@ app.post("/login/", function (req, res) {
         res.redirect("/");
     }else{
         hint = messages[2];
-        render(isAdmin, res, title, descr, hint);
+        render(isAdmin, res, title, descr, hint, admin);
     }
 });
 
@@ -61,7 +61,7 @@ app.route("/")
     //вывод изображений
     .get((req, res) => {
         hint = false;
-        render(isAdmin, res, title, descr, hint);
+        render(isAdmin, res, title, descr, hint, admin);
     })
     //валидация, загрузка и вывод обновленной коллекции
     .post((req, res) => {
@@ -69,20 +69,20 @@ app.route("/")
             uploader(req, res, function (err) {
                 if (err){
                     hint = messages[0];
-                    render(isAdmin, res, title, descr, hint);
+                    render(isAdmin, res, title, descr, hint, admin);
                 } else {
                     if (req.file && req.file.mimetype && req.file.mimetype.indexOf('image') !== -1){
                         hint = false;
-                        render(isAdmin, res, title, descr, hint);
+                        render(isAdmin, res, title, descr, hint, admin);
                     } else {
                         hint =  messages[1];
-                        render(isAdmin, res, title, descr, hint);
+                        render(isAdmin, res, title, descr, hint, admin);
                     }
                 }
             });
         }else{
             hint = messages[3];
-            render(isAdmin, res, title, descr, hint);
+            render(isAdmin, res, title, descr, hint, admin);
         }
     });
 
@@ -91,11 +91,11 @@ app.delete("/delete/:id", (req, res) => {
     if(isAdmin){
         remover(req, res, () => {
             hint = false;
-            render(isAdmin, res, title, descr, hint);
+            render(isAdmin, res, title, descr, hint, admin);
         });
     }else{
         hint = messages[3];
-        render(isAdmin, res, title, descr, hint);
+        render(isAdmin, res, title, descr, hint, admin);
     }
 })    
 
