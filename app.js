@@ -35,13 +35,13 @@ app.use(cookieParser());
 app.use(session({keys: ['montesuma']}));
 
 //проверяем админский хэш в сессии
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
     isAdmin = (req.session.passHash == admin.passHash);
     next();
 });
 
 //авторизация
-app.post("/login/", function (req, res) {
+app.post("/login/", (req, res) => {
 	if(req.body.username == admin.username && crypto(req.body.password) == admin.passHash){
         req.session.passHash = admin.passHash;
         res.redirect("/");
@@ -52,7 +52,7 @@ app.post("/login/", function (req, res) {
 });
 
 //выход
-app.post("/logout/", function (req, res) {
+app.post("/logout/", (req, res) => {
     req.session = null;
     res.redirect("/");
 });
@@ -66,7 +66,7 @@ app.route("/")
     //валидация, загрузка и вывод обновленной коллекции
     .post((req, res) => {
         if(isAdmin){
-            uploader(req, res, function (err) {
+            uploader(req, res, (err) => {
                 if (err){
                     hint = messages[0];
                     render(isAdmin, res, title, descr, hint, admin);
