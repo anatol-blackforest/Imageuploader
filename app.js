@@ -18,7 +18,7 @@ const msgs = require('./lib/messages');
 
 const app = express();
 
-let {messages, admin, title, descr} = msgs,
+let {messages, admin} = msgs,
     isAdmin;
 
 //шаблонизатор
@@ -43,7 +43,7 @@ app.post("/login/", (req, res) => {
         req.session.passHash = admin.passHash;
         res.redirect("/");
     }else{
-        render(isAdmin, res, title, descr, admin, messages[2]);
+        render(isAdmin, res, messages[2]);
     }
 });
 
@@ -56,24 +56,24 @@ app.post("/logout/", (req, res) => {
 app.route("/")
     //вывод изображений
     .get((req, res) => {
-        render(isAdmin, res, title, descr, admin);
+        render(isAdmin, res);
     })
     //валидация, загрузка и вывод обновленной коллекции
     .post((req, res) => {
         if(isAdmin){
             uploader(req, res, (err) => {
                 if (err){
-                    render(isAdmin, res, title, descr, admin, messages[0]);
+                    render(isAdmin, res, messages[0]);
                 } else {
                     if (req.file && req.file.mimetype && req.file.mimetype.indexOf('image') !== -1){
-                        render(isAdmin, res, title, descr, admin);
+                        render(isAdmin, res);
                     } else {
-                        render(isAdmin, res, title, descr, admin, messages[1]);
+                        render(isAdmin, res, messages[1]);
                     }
                 }
             });
         }else{
-            render(isAdmin, res, title, descr, admin, messages[3]);
+            render(isAdmin, res, messages[3]);
         }
     });
 
@@ -81,10 +81,10 @@ app.route("/")
 app.delete("/delete/:id", (req, res) => {
     if(isAdmin){
         remover(req, res, () => {
-            render(isAdmin, res, title, descr, admin);
+            render(isAdmin, res);
         });
     }else{
-        render(isAdmin, res, title, descr, admin, messages[3]);
+        render(isAdmin, res, messages[3]);
     }
 })    
 
