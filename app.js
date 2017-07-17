@@ -14,15 +14,12 @@ const uploader = require('./lib/uploader');
 const render = require('./lib/render');
 const remover = require('./lib/remover');
 const crypto = require('./lib/crypto');
+const msgs = require('./lib/messages');
 
 const app = express();
 
-let messages = ["Very big image! (must be less than 2 mb)", "Please upload image only!", "Пожалуйста, введите верные логин и пароль", "Хуй хакерам, а не помидоры!"],
-    //имя и пароль админа (вне базы для этой версии, в данный момент - пароль 123).
-    admin = {username:"admin", passHash:"be9106a650ede01f4a31fde2381d06f5fb73e612"},
-    title = ["Image uploader", "Авторизация"],
-    descr = ["* images only (2MB max)","Введите логин и пароль"],
-    hint, isAdmin;
+let {messages, admin, title, descr} = msgs,
+    isAdmin;
 
 //шаблонизатор
 app.set('views', path.join(__dirname, 'views'));
@@ -46,8 +43,7 @@ app.post("/login/", (req, res) => {
         req.session.passHash = admin.passHash;
         res.redirect("/");
     }else{
-        hint = messages[2];
-        render(isAdmin, res, title, descr, hint, admin);
+        render(isAdmin, res, title, descr, admin, messages[2]);
     }
 });
 
@@ -60,29 +56,24 @@ app.post("/logout/", (req, res) => {
 app.route("/")
     //вывод изображений
     .get((req, res) => {
-        hint = false;
-        render(isAdmin, res, title, descr, hint, admin);
+        render(isAdmin, res, title, descr, admin);
     })
     //валидация, загрузка и вывод обновленной коллекции
     .post((req, res) => {
         if(isAdmin){
             uploader(req, res, (err) => {
                 if (err){
-                    hint = messages[0];
-                    render(isAdmin, res, title, descr, hint, admin);
+                    render(isAdmin, res, title, descr, admin, messages[0]);
                 } else {
                     if (req.file && req.file.mimetype && req.file.mimetype.indexOf('image') !== -1){
-                        hint = false;
-                        render(isAdmin, res, title, descr, hint, admin);
+                        render(isAdmin, res, title, descr, admin);
                     } else {
-                        hint =  messages[1];
-                        render(isAdmin, res, title, descr, hint, admin);
+                        render(isAdmin, res, title, descr, admin, messages[1]);
                     }
                 }
             });
         }else{
-            hint = messages[3];
-            render(isAdmin, res, title, descr, hint, admin);
+            render(isAdmin, res, title, descr, admin, messages[3]);
         }
     });
 
@@ -90,12 +81,10 @@ app.route("/")
 app.delete("/delete/:id", (req, res) => {
     if(isAdmin){
         remover(req, res, () => {
-            hint = false;
-            render(isAdmin, res, title, descr, hint, admin);
+            render(isAdmin, res, title, descr, admin);
         });
     }else{
-        hint = messages[3];
-        render(isAdmin, res, title, descr, hint, admin);
+        render(isAdmin, res, title, descr, admin, messages[3]);
     }
 })    
 
