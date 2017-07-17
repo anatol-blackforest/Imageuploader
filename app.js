@@ -61,7 +61,7 @@ app.route("/")
     //валидация, загрузка и вывод обновленной коллекции
     .post((req, res) => {
         if(isAdmin){
-            uploader(req, res, (err) => {
+            uploader(req, res, err => {
                 if (err){
                     render(isAdmin, res, messages[0]);
                 } else {
