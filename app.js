@@ -55,9 +55,7 @@ app.post("/logout/", (req, res) => {
 
 app.route("/")
     //вывод изображений
-    .get((req, res) => {
-        render(isAdmin, res);
-    })
+    .get((req, res) => render(isAdmin, res))
     //валидация, загрузка и вывод обновленной коллекции
     .post((req, res) => {
         if(isAdmin){
@@ -80,17 +78,13 @@ app.route("/")
 //удаление изображения
 app.delete("/delete/:id", (req, res) => {
     if(isAdmin){
-        remover(req, res, () => {
-            render(isAdmin, res);
-        });
+        remover(req, res, () => render(isAdmin, res));
     }else{
         render(isAdmin, res, messages[3]);
     }
 })    
 
 // ловим 404 ошибку
-app.use((req, res) => {
-  res.status(404).render("404.twig");
-}); 
+app.use((req, res) => res.status(404).render("404.twig")); 
 
 module.exports = app;
