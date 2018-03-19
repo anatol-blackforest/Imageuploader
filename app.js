@@ -58,30 +58,18 @@ app.route("/")
     .get((req, res) => render(isAdmin, res))
     //валидация, загрузка и вывод обновленной коллекции
     .post((req, res) => {
-        if(isAdmin){
-            uploader(req, res, err => {
-                if (err){
-                    render(isAdmin, res, messages[0]);
-                } else {
-                    if (req.file && req.file.mimetype && req.file.mimetype.indexOf('image') !== -1){
-                        render(isAdmin, res);
-                    } else {
-                        render(isAdmin, res, messages[1]);
-                    }
-                }
-            });
-        }else{
-            render(isAdmin, res, messages[3]);
-        }
+        if(!isAdmin) return render(isAdmin, res, messages[3]);
+        uploader(req, res, err => {
+            if (err) return render(isAdmin, res, messages[0]);
+            if (req.file && req.file.mimetype && req.file.mimetype.indexOf('image') !== -1) return render(isAdmin, res);
+            render(isAdmin, res, messages[1]);
+        });
     });
 
 //удаление изображения
 app.delete("/delete/:id", (req, res) => {
-    if(isAdmin){
-        remover(req, res, () => render(isAdmin, res));
-    }else{
-        render(isAdmin, res, messages[3]);
-    }
+    if(isAdmin) return remover(req, res, () => render(isAdmin, res));
+    render(isAdmin, res, messages[3]);
 })    
 
 // ловим 404 ошибку
